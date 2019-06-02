@@ -10,7 +10,7 @@ TEMPLATE_PATH = os.path.join(WEB_DIR_PATH, 'templates/')
 print(TEMPLATE_PATH)
 
 app = Flask(__name__, template_folder=TEMPLATE_PATH)
-therm: Thermostat = None
+therm = None
 
 
 class WebThermostat(QThread):
