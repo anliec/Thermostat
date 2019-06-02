@@ -1,0 +1,25 @@
+<html>
+<style>
+    body {
+        background-color: black;
+        color: white;
+    }
+</style>
+<head>
+        <title>Thermostat</title>
+</head>
+<body>
+
+<!--<h1>Thermostat</h1>-->
+<p style="font-size: 5em">{{ temperature }}°C</p>
+<p style="font-size: 2em">{{ humidity }}%</p>
+<p style="font-size: 2em">{{ target }}°C
+    <input type="button" onclick="location.href='/target/plus'" class="button;" value="+"/>
+    <input type="button" onclick="location.href='/target/moins'" class="button;" value="-"/>
+</p>
+<input type="button" onclick="location.href='/status/ac'" class="button;" value="ac"/>
+<input type="button" onclick="location.href='/status/off'" class="button;" value="off"/>
+<input type="button" onclick="location.href='/status/heat'" class="button;" value="heat"/>
+
+</body>
+</html>
