@@ -25,7 +25,8 @@ class WebThermostat(QThread):
 
 @app.route('/')
 def index():
-    return "tmp: {} humidity: {}".format(therm.last_temperature, therm.last_humidity)
+    return render_template("thermostat.html", temperature=therm.last_temperature, target=therm.temperature_target,
+                           humidity=therm.last_humidity)
 
 
 @app.route("/<device_name>/<action>")
