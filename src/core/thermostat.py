@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QTimer, pyqtSlot, QObject, pyqtSignal
-
+import json
 
 from src.core.serial_util import ArdiunoSerialInterface
 
@@ -10,7 +10,8 @@ class Thermostat(QObject):
     target_temperature_changed = pyqtSignal()
     mode_changed = pyqtSignal()
 
-    def __init__(self, temperature_target: float = 25, ms_update_interval: int = 2000, mode: str = "off"):
+    def __init__(self, temperature_target: float = 25, ms_update_interval: int = 2000, mode: str = "off",
+                 skip_config_file: bool = False):
         super().__init__()
         self.arduino_com = ArdiunoSerialInterface()
         self.temperature_target = temperature_target
@@ -26,6 +27,31 @@ class Thermostat(QObject):
         self.timer.timeout.connect(self.tick)
         self.timer.setInterval(self.update_interval)
         self.timer.setSingleShot(False)
+        self.config_file_path = "config.json"
+        if not skip_config_file:
+            self.load_config()
+        # connections
+        self.mode_changed.connect(self.save_config)
+        self.target_temperature_changed.connect(self.save_config)
+
+    @pyqtSlot()
+    def save_config(self):
+        config = {"temperature_target": self.temperature_target,
+                  "mode": self.mode}
+        with open(self.config_file_path, 'w') as f:
+            json.dump(config, f)
+
+    @pyqtSlot()
+    def load_config(self):
+        try:
+            with open(self.config_file_path, 'r') as f:
+                config = json.load(f)
+            self.set_temperature_target(config["temperature_target"])
+            self.set_mode(config["mode"])
+        except FileNotFoundError:
+            print("Unable to read config file: File Npt Found")
+        except KeyError:
+            print("config file is not correctly formatted")
 
     @pyqtSlot()
     def start(self):

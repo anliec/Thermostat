@@ -3,7 +3,18 @@ import serial
 
 class ArdiunoSerialInterface:
     def __init__(self, serial_port="/dev/ttyUSB0"):
-        self.serial = serial.Serial(serial_port)
+        try:
+            self.serial = serial.Serial(serial_port)
+            self.is_fake_serial = False
+        except serial.SerialException:
+            print("Unable to setup Serial connection, setting up fake serial for testing purpose")
+
+            class FakeSerial:
+                write = print
+                in_waiting = 0
+
+            self.serial = FakeSerial()
+            self.is_fake_serial = True
         self.last_values = {"temperature": -999.0,
                             "humidity": -999.0,
                             "relay1": -1,
