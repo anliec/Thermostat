@@ -49,13 +49,13 @@ class Thermostat(QObject):
         if self.mode == "ac":
             if round(self.last_temperature) > round(self.temperature_target):
                 self.arduino_com.write_relay1(True)
-            elif round(self.last_temperature) < round(self.temperature_target):
+            elif round(self.last_temperature) <= round(self.temperature_target):
                 self.arduino_com.write_relay1(False)
             self.arduino_com.write_relay2(False)
         elif self.mode == "heat":
             if round(self.last_temperature) < round(self.temperature_target):
                 self.arduino_com.write_relay2(True)
-            elif round(self.last_temperature) > round(self.temperature_target):
+            elif round(self.last_temperature) >= round(self.temperature_target):
                 self.arduino_com.write_relay2(False)
             self.arduino_com.write_relay1(False)
         else:
