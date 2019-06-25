@@ -43,7 +43,7 @@ class ThermostatWindow(QMainWindow):
 
     @pyqtSlot(int)
     def update_humidity_display(self, value: int):
-        self.ui.lb_humidity.setText("{:02d}%".format(value))
+        self.ui.lb_humidity.setText("{:02d}% 💧️".format(value))
 
     @pyqtSlot(int)
     def update_target_temp_display(self, value: int):

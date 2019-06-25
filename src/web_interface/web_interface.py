@@ -25,8 +25,9 @@ class WebThermostat(QThread):
 
 @app.route('/')
 def index():
-    return render_template("thermostat.html", temperature=therm.last_temperature, target=therm.temperature_target,
-                           humidity=therm.last_humidity)
+    return render_template("thermostat.html", temperature=int(therm.last_temperature),
+                           target=int(therm.temperature_target),
+                           humidity=int(therm.last_humidity), mode=therm.mode)
 
 
 @app.route("/<device_name>/<action>")
@@ -44,7 +45,8 @@ def action(device_name, action):
         if action == "heat":
             therm.set_mode("heat")
 
-    return render_template("thermostat.html", temperature=therm.last_temperature, target=therm.temperature_target,
-                           humidity=therm.last_humidity)
+    return render_template("thermostat.html", temperature=int(therm.last_temperature),
+                           target=int(therm.temperature_target),
+                           humidity=int(therm.last_humidity), mode=therm.mode)
 
 

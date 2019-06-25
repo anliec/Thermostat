@@ -4,6 +4,17 @@
         background-color: black;
         color: white;
     }
+
+    input[type=button] {
+        background-color: black;
+        color: white;
+        font-size: 30px;
+        padding: 20px 30px 20px 30px;
+    }
+
+    input[type=button]:disabled {
+        background-color: #555753;
+    }
 </style>
 <head>
         <title>Thermostat</title>
@@ -12,14 +23,14 @@
 
 <!--<h1>Thermostat</h1>-->
 <p style="font-size: 5em">{{ temperature }}°C</p>
-<p style="font-size: 2em">{{ humidity }}%</p>
+<p style="font-size: 2em">{{ humidity }}% 💧️</p>
 <p style="font-size: 2em">{{ target }}°C
-    <input type="button" onclick="location.href='/target/plus'" class="button;" value="+"/>
-    <input type="button" onclick="location.href='/target/moins'" class="button;" value="-"/>
+    <input type="button" onclick="location.href='/target/plus'" class="button;" value="🔺️"/>
+    <input type="button" onclick="location.href='/target/moins'" class="button;" value="🔻️"/>
 </p>
-<input type="button" onclick="location.href='/status/ac'" class="button;" value="ac"/>
-<input type="button" onclick="location.href='/status/off'" class="button;" value="off"/>
-<input type="button" onclick="location.href='/status/heat'" class="button;" value="heat"/>
+<input type="button" {% if mode=="ac" %} disabled {% endif %} onclick="location.href='/status/ac'" class="button;" value="❄️"/>
+<input type="button" {% if mode=="off" %} disabled {% endif %} onclick="location.href='/status/off'" class="button;" value="off"/>
+<input type="button" {% if mode=="heat" %} disabled {% endif %} onclick="location.href='/status/heat'" class="button;" value="🔥️"/>
 
 </body>
 </html>
